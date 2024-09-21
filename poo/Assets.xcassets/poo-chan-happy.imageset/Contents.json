@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "poo-chan-sukkiri.png",
+      "filename" : "poo-chan-happy@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "poo-chan-happy@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "poo-chan-happy@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

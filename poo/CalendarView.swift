@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-struct CalendarRecipeView: View {
+struct HomeView: View {
     @State private var selectedDate = Date()
     @State private var recommendedRecipe: Recipe?
 
@@ -105,5 +105,5 @@ struct RecipeCard: View {
 }
 
 #Preview {
-    CalendarRecipeView()
+    HomeView()
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MenuBar: View {
     init(){
-           
+
            UITabBar.appearance().backgroundColor = UIColor.white
        }
 
@@ -30,7 +30,7 @@ struct MenuBar: View {
                     Text("AI")
                 }
 
-            CalendarRecipeView()
+            PooView()
                 .tabItem {
                     ScaledImage(name: "poo-chan", size: CGSize(width: 24, height: 24))
 
