@@ -7,10 +7,10 @@
 import SwiftUI
 
 
-struct PooModel {
-    var selectedColor: ExcrementColor = .brown
-    var selectedFeeling: String = "happy"
-    var selectedQuantity: ExcrementQuantity = .normal
+struct PooDataModel {
+    var pooColor: PoolColor = .brown
+    var pooFeeling: PooFeeling = .happy
+    var pooSize: PoolSize = .normal
 
 
 }
@@ -31,15 +31,15 @@ struct PooView: View {
     var selectedDate: Date
 
 
-    @State private var selectedColor: ExcrementColor = .brown
-    @State private var selectedFeeling: String = "happy"
-    @State private var selectedQuantity: ExcrementQuantity = .normal
+    @State private var selectedColor: PoolColor = .brown
+    @State private var selectedFeeling: PooFeeling = .happy
+    @State private var selectedQuantity: PoolSize = .normal
 
 
     @Environment(\.dismiss) var dismiss
 //    @State private var selectedDate: Date = Date()
 
-      var onSubmit: (ExcrementColor, String) -> Void
+    var onSubmit: (PoolColor, PooFeeling) -> Void
 
     var body: some View {
         VStack(spacing: 20) {
@@ -48,7 +48,7 @@ struct PooView: View {
                 .fontWeight(.bold)
 
 
-            Image("poo-chan-" + selectedFeeling)
+            Image("poo-chan-" + selectedFeeling.rawValue)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 120, height: 120)
@@ -64,7 +64,7 @@ struct PooView: View {
                 .font(.headline)
 
             HStack {
-                ForEach(ExcrementColor.allCases, id: \.self) { color in
+                ForEach(PoolColor.allCases, id: \.self) { color in
                     Button(action: {
                         selectedColor = color
                     }) {
@@ -84,7 +84,7 @@ struct PooView: View {
 
             // ExcrementQuantity Selector
             HStack {
-                ForEach(ExcrementQuantity.allCases, id: \.self) { quantity in
+                ForEach(PoolSize.allCases, id: \.self) { quantity in
                     Button(action: {
                         selectedQuantity = quantity
                     }) {
@@ -102,15 +102,15 @@ struct PooView: View {
 
             HStack {
                 // TODO: enum
-                ForEach(ExcrementFeeling.allCases, id: \.self) { feeling in
+                ForEach(PooFeeling.allCases, id: \.self) { feeling in
                     Button(action: {
-                        selectedFeeling = feeling.rawValue
+                        selectedFeeling = feeling
                     }) {
                         Image("poo-chan-" + feeling.rawValue)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
-                            .border(selectedFeeling == feeling.rawValue ? Color.blue : Color.clear, width: 2)
+                            .border(selectedFeeling == feeling ? Color.blue : Color.clear, width: 2)
                     }
                 }
             }
@@ -133,7 +133,7 @@ struct PooView: View {
 
     private func submitRecord() {
         // Handle the submission logic here
-        print("Color: \(selectedColor), Quantity: \(selectedFeeling)")
+        print("Color: \(selectedColor), Feeling: \(selectedFeeling)")
     }
 }
 
@@ -146,14 +146,14 @@ struct PooView: View {
 
 
 // Enum for Excrement Quantity
-enum ExcrementQuantity: String,CaseIterable {
+enum PoolSize: String,CaseIterable {
     case small = "Small"
     case normal = "Normal"
     case large = "Large"
 }
 
 // Enum for Excrement Color with actual colors
-enum ExcrementColor: String, CaseIterable {
+enum PoolColor: String, CaseIterable {
     case yellow = "黄"
     case orange = "オレンジ"
     case brown = "茶"
@@ -177,7 +177,7 @@ enum ExcrementColor: String, CaseIterable {
 }
 
 // Enum for Excrement Feeling
-enum ExcrementFeeling: String, CaseIterable {
+enum PooFeeling: String, CaseIterable {
     case happy = "happy"
     case stern = "stern"
     case sukkiri = "sukkiri"
