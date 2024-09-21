@@ -9,7 +9,14 @@ import SwiftUI
 
 
 struct MenuBar: View {
+    init(){
+
+           UITabBar.appearance().backgroundColor = UIColor.white
+       }
+
     var body: some View {
+
+        
         TabView {
             HomeView()
                 .tabItem {
@@ -23,12 +30,12 @@ struct MenuBar: View {
                     Text("AI")
                 }
 
-            CalendarRecipeView()
+            PooView()
                 .tabItem {
-                    Image(systemName: "hand.raised.fill")
-                    Text("Poop")
-                }
+                    ScaledImage(name: "poo-chan", size: CGSize(width: 24, height: 24))
 
+                    Text("Poop")
+                }           
             ChatView()
                 .tabItem {
                     Image(systemName: "message.fill")
@@ -41,6 +48,7 @@ struct MenuBar: View {
                     Text("Profile")
                 }
         }
+
     }
 }
 
@@ -48,4 +56,27 @@ struct MenuBar: View {
 
 #Preview {
     MenuBar()
+}
+
+
+struct ScaledImage: View {
+    let name: String
+    let size: CGSize
+
+    var body: Image {
+        let uiImage = resizedImage(named: self.name, for: self.size) ?? UIImage()
+
+        return Image(uiImage: uiImage.withRenderingMode(.alwaysOriginal))
+    }
+
+    func resizedImage(named: String, for size: CGSize) -> UIImage? {
+        guard let image = UIImage(named: named) else {
+            return nil
+        }
+
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { (context) in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
 }

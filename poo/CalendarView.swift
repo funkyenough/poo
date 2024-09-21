@@ -6,39 +6,40 @@
 //
 
 import SwiftUI
-struct CalendarRecipeView: View {
+struct HomeView: View {
     @State private var selectedDate = Date()
     @State private var recommendedRecipe: Recipe?
 
     let calendar = Calendar.current
 
     var body: some View {
-        VStack {
-            DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
-                .datePickerStyle(GraphicalDatePickerStyle())
-                .padding()
-
-            Divider()
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Today's Recommended Recipe")
-                    .font(.headline)
-
-                if let recipe = recommendedRecipe {
-                    RecipeCard(recipe: recipe)
-                } else {
-                    Text("Loading recipe...")
-                        .italic()
+        ScrollView {
+            VStack {
+                DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .padding()
+                
+                Divider()
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Today's Recommended Recipe")
+                        .font(.headline)
+                    
+                    if let recipe = recommendedRecipe {
+                        RecipeCard(recipe: recipe)
+                    } else {
+                        Text("Loading recipe...")
+                            .italic()
+                    }
                 }
+                .padding()
+                
+                Spacer()
             }
-            .padding()
-
-            Spacer()
+            .navigationTitle("Calendar & Recipe")
+            .onAppear(perform: loadRecommendedRecipe)
         }
-        .navigationTitle("Calendar & Recipe")
-        .onAppear(perform: loadRecommendedRecipe)
     }
-
     func loadRecommendedRecipe() {
         // Simulating an API call to get a recommended recipe
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -98,11 +99,11 @@ struct RecipeCard: View {
             }
         }
         .padding()
-        .background(Color.gray.opacity(0.1))
+//        .background(Color.gray.opacity(0.1))
         .cornerRadius(10)
     }
 }
 
 #Preview {
-    CalendarRecipeView()
+    HomeView()
 }
