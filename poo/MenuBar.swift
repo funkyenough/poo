@@ -37,11 +37,11 @@ struct MenuBar: View {
             }
                 .tabItem {
                     ScaledImage(name: "poo-chan", size: CGSize(width: 24, height: 24))
-
                     Text("Poo")
-                }
-                .tag(2)
-            ChatView()
+                }        
+                tag(2)   
+            MapView()
+ 
                 .tabItem {
                     Image(systemName: "message.fill")
                     Text("Chat")
