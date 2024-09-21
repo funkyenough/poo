@@ -21,14 +21,12 @@ struct AIView: View {
     }
 
     let quickQuestions: [(buttonText: String, fullQuery: String)] = [
-        ("My constipation has been on for 3 days.", "I have been constipated for a few days. I want you to instruct me as to how to improve my dietary habits, water intake, sleep schedule, stress level."),
-        ("I have a persistent cough.", "I've had a persistent cough for over a week. What could be causing it and what home remedies can I try?"),
-        ("My skin is very dry.", "My skin has been extremely dry lately. Can you suggest some natural ways to improve skin hydration and overall skin health?"),
-        ("I'm having trouble sleeping.", "I've been having difficulty falling asleep and staying asleep. What are some effective sleep hygiene practices I can implement?")
-    ]
+        ("便秘が続いています", "数日間便秘が続いています。食事の改善、水分摂取、睡眠スケジュール、ストレス管理の方法についてアドバイスをお願いします。"),
+        ("下痢が続いています", "数日間下痢が続いています。その原因と家庭でできる対処法を教えてください。"),
+        ("腹痛がひどいです", "最近腹痛がひどくなっています。考えられる原因と対処方法について教えてください。"),
+        ("おならが多いです", "最近おならが多くなっています。おならを減らし、消化を改善する方法を提案してください。")
+]
 
-
-    
     struct ChatCompletionResponse: Codable {
         let id: String
         let object: String
