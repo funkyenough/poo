@@ -74,6 +74,7 @@
 				20627AB92C9E8C9900541032 /* ChatViewModel.swift */,
 				20627A9B2C9E614C00541032 /* ContentView.swift */,
 				20627AA72C9E6C0B00541032 /* MenuBar.swift */,
+				5659A3C32C9E9EA900D8DB28 /* EditProfileView.swift */,
 				20627AAF2C9E72C900541032 /* AIView.swift */,
 				20627AB12C9E730000541032 /* ChatView.swift */,
 				20627AB32C9E73A300541032 /* HomeView.swift */,
@@ -164,7 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20627AB62C9E76CB00541032 /* EditProfileView.swift in Sources */,
+				5659A3C42C9E9EA900D8DB28 /* EditProfileView.swift in Sources */,
 				20627A9C2C9E614C00541032 /* ContentView.swift in Sources */,
 				20627AAE2C9E725A00541032 /* UserProfileView.swift in Sources */,
 				20627A9A2C9E614C00541032 /* pooApp.swift in Sources */,
