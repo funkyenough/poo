@@ -22,6 +22,7 @@
 		206D8E142C9EFC4E00AA6BA0 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D8E132C9EFC4E00AA6BA0 /* EditProfileView.swift */; };
 		206D8E182C9F28B900AA6BA0 /* PooViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D8E172C9F28B900AA6BA0 /* PooViewModel.swift */; };
 		206D8E1A2C9F35C300AA6BA0 /* PooModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D8E192C9F35C300AA6BA0 /* PooModel.swift */; };
+		2E78D24F2C9F806000B99F65 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E78D24E2C9F806000B99F65 /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		206D8E132C9EFC4E00AA6BA0 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		206D8E172C9F28B900AA6BA0 /* PooViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooViewModel.swift; sourceTree = "<group>"; };
 		206D8E192C9F35C300AA6BA0 /* PooModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooModel.swift; sourceTree = "<group>"; };
+		2E78D24E2C9F806000B99F65 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				20627AB92C9E8C9900541032 /* ChatViewModel.swift */,
 				20627A9B2C9E614C00541032 /* ContentView.swift */,
 				20627AAF2C9E72C900541032 /* AIView.swift */,
+				2E78D24E2C9F806000B99F65 /* MapView.swift */,
 				20627AB12C9E730000541032 /* ChatView.swift */,
 				20627AAD2C9E725A00541032 /* UserProfileView.swift */,
 				206D8E132C9EFC4E00AA6BA0 /* EditProfileView.swift */,
@@ -195,6 +198,7 @@
 				206D8E142C9EFC4E00AA6BA0 /* EditProfileView.swift in Sources */,
 				20627AAA2C9E6C5A00541032 /* UserModel.swift in Sources */,
 				20627AB22C9E730000541032 /* ChatView.swift in Sources */,
+				2E78D24F2C9F806000B99F65 /* MapView.swift in Sources */,
 				20627AB42C9E73A300541032 /* HomeView.swift in Sources */,
 				20627AB02C9E72C900541032 /* AIView.swift in Sources */,
 				20627AAC2C9E71EF00541032 /* PooView.swift in Sources */,
@@ -337,6 +341,7 @@
 				DEVELOPMENT_TEAM = HX979J7QJL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = poo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -367,6 +372,7 @@
 				DEVELOPMENT_TEAM = HX979J7QJL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = poo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

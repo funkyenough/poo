@@ -9,21 +9,21 @@ import SwiftUI
 
 
 struct PooDataModel {
-    var pooColor: PoolColor = .brown
+    var pooColor: PooColor = .brown
     var pooFeeling: PooFeeling = .happy
-    var pooSize: PoolSize = .normal
+    var pooSize: PooSize = .normal
 
 }
 
 // Enum for Excrement Quantity
-enum PoolSize: String,CaseIterable {
+enum PooSize: String, CaseIterable {
     case small = "Small"
     case normal = "Normal"
     case large = "Large"
 }
 
 // Enum for Excrement Color with actual colors
-enum PoolColor: String, CaseIterable {
+enum PooColor: String, CaseIterable {
     case yellow = "黄"
     case orange = "オレンジ"
     case brown = "茶"

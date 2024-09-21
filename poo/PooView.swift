@@ -14,9 +14,9 @@ struct PooView: View {
 
     var isSheet: Bool = false // New parameter to indicate context
 
-    @State private var selectedColor: PoolColor = .brown
+    @State private var selectedColor: PooColor = .brown
     @State private var selectedFeeling: PooFeeling = .happy
-    @State private var selectedSize: PoolSize = .normal
+    @State private var selectedSize: PooSize = .normal
     @State private var isLoading = false // Loading state
     @EnvironmentObject private var popManager: PooViewModel
     @State private var alertMessage = ""
@@ -49,7 +49,7 @@ struct PooView: View {
                 .font(.headline)
 
             HStack {
-                ForEach(PoolColor.allCases, id: \.self) { color in
+                ForEach(PooColor.allCases, id: \.self) { color in
                     Button(action: {
                         selectedColor = color
                     }) {
@@ -69,7 +69,7 @@ struct PooView: View {
 
             // ExcrementQuantity Selector
             HStack {
-                ForEach(PoolSize.allCases, id: \.self) { size in
+                ForEach(PooSize.allCases, id: \.self) { size in
                     Button(action: {
                         selectedSize = size
                     }) {
