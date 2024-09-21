@@ -38,7 +38,7 @@ struct MenuBar: View {
 
                     Text("Poop")
                 }           
-            ChatView()
+            MapView()
                 .tabItem {
                     Image(systemName: "message.fill")
                     Text("Chat")
