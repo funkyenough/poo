@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>NSLocationWhenInUseUsageDescription</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+            <key>NSLocationWhenInUseUsageDescription</key>
+            <string>アプリの機能を利用するために現在地の取得が必要です。</string>
+            <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+            <string>アプリの機能を利用するために現在地の取得が必要です。</string>
+		</dict>
+	</array>
+</dict>
+</plist>
