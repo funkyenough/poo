@@ -5,41 +5,26 @@
 //  Created by YaoNing on 2024/09/21.
 //
 import SwiftUI
-
-
-struct PooDataModel {
-    var pooColor: PoolColor = .brown
-    var pooFeeling: PooFeeling = .happy
-    var pooSize: PoolSize = .normal
-
-
-}
-
-//@Observable
-//class PooViewModel {
-//    var selectedColor:ExcrementColor = .brown
-//    var selectedFeeling: String = "happy"
-//    var selectedQuantity: ExcrementQuantity = .normal
-//
-//}
-
-
-
+ 
 struct PooView: View {
 
     // Data : Model
     var selectedDate: Date
 
 
+    var isSheet: Bool = false // New parameter to indicate context
+
     @State private var selectedColor: PoolColor = .brown
     @State private var selectedFeeling: PooFeeling = .happy
-    @State private var selectedQuantity: PoolSize = .normal
-
-
+    @State private var selectedSize: PoolSize = .normal
+    @State private var isLoading = false // Loading state
+    @EnvironmentObject private var popManager: PooViewModel
+    @State private var alertMessage = ""
+    @State private var showAlert = false
     @Environment(\.dismiss) var dismiss
 //    @State private var selectedDate: Date = Date()
 
-    var onSubmit: (PoolColor, PooFeeling) -> Void
+    var onSubmit: (PooDataModel) -> Void
 
     var body: some View {
         VStack(spacing: 20) {
@@ -48,12 +33,12 @@ struct PooView: View {
                 .fontWeight(.bold)
 
 
-            Image("poo-chan-" + selectedFeeling.rawValue)
+            Image(selectedFeeling.rawValue)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 120, height: 120)
                 .foregroundColor(selectedColor.color)
-                .background(selectedColor.color)
+//                .background(selectedColor.color)
 
             Text(DateFormatter.localizedString(from: selectedDate, dateStyle: .medium, timeStyle: .none))
                      .font(.subheadline)
@@ -84,13 +69,13 @@ struct PooView: View {
 
             // ExcrementQuantity Selector
             HStack {
-                ForEach(PoolSize.allCases, id: \.self) { quantity in
+                ForEach(PoolSize.allCases, id: \.self) { size in
                     Button(action: {
-                        selectedQuantity = quantity
+                        selectedSize = size
                     }) {
-                        Text(quantity.rawValue)
+                        Text(size.rawValue)
                             .padding()
-                            .background(selectedQuantity == quantity ? Color.blue : Color.gray.opacity(0.2))
+                            .background(selectedSize == size ? Color.blue : Color.gray.opacity(0.2))
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
@@ -101,12 +86,12 @@ struct PooView: View {
                 .font(.headline)
 
             HStack {
-                // TODO: enum
+                
                 ForEach(PooFeeling.allCases, id: \.self) { feeling in
                     Button(action: {
                         selectedFeeling = feeling
                     }) {
-                        Image("poo-chan-" + feeling.rawValue)
+                        Image(feeling.rawValue)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
@@ -116,19 +101,59 @@ struct PooView: View {
             }
 
             Button(action: {
+                popManager.addOrUpdatePooData(for: selectedDate, pooData: PooDataModel(pooColor: selectedColor, pooFeeling: selectedFeeling, pooSize: selectedSize))
+//                pooDataDict[date] = poo
 //                submitRecord()
-                onSubmit(selectedColor, selectedFeeling)
+                onSubmit(PooDataModel(pooColor: selectedColor, pooFeeling: selectedFeeling, pooSize: selectedSize))
                 dismiss()
+
+                isLoading = true
+                          // Simulate a network request or processing delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    popManager.addOrUpdatePooData(for: selectedDate, pooData: PooDataModel(pooColor: selectedColor, pooFeeling: selectedFeeling, pooSize: selectedSize))
+                    onSubmit(PooDataModel(pooColor: selectedColor, pooFeeling: selectedFeeling, pooSize: selectedSize))
+
+
+                    if isSheet {
+                        dismiss()
+                    }
+                    alertMessage = "Updated Data:\nColor: \(selectedColor)\nFeeling: \(selectedFeeling)\nSize: \(selectedSize)"
+                    showAlert = true // Show the alert
+
+                    isLoading = false // End loading state
+                }
             }) {
-                Text("Submit")
-                    .fontWeight(.bold)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+//                Text("Submit")
+//                    .fontWeight(.bold)
+//                    .padding()
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
+
+                ZStack {
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.5, anchor: .center)
+                    } else {
+                        Text(isSheet ? "Submit" : "Update Today")
+                            .fontWeight(.bold)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                }
+                .frame(height: 50) // Fixed height to prevent layout shifts
             }
         }
+
         .padding()
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Data Updated"),
+                          message: Text(alertMessage),
+                          dismissButton: .default(Text("OK")))
+                }
     }
 
     private func submitRecord() {
@@ -139,47 +164,8 @@ struct PooView: View {
 
 
 #Preview {
-    PooView(selectedDate: Date()){_,_ in }
+    PooView(selectedDate: Date(), isSheet: false){_ in }
 }
 
 
 
-
-// Enum for Excrement Quantity
-enum PoolSize: String,CaseIterable {
-    case small = "Small"
-    case normal = "Normal"
-    case large = "Large"
-}
-
-// Enum for Excrement Color with actual colors
-enum PoolColor: String, CaseIterable {
-    case yellow = "黄"
-    case orange = "オレンジ"
-    case brown = "茶"
-    case darkGreen = "深緑"
-    case black = "黒"
-
-    var color: Color {
-        switch self {
-        case .yellow:
-            return Color.yellow
-        case .orange:
-            return Color.orange
-        case .brown:
-            return Color.brown
-        case .darkGreen:
-            return Color.green
-        case .black:
-            return Color.black
-        }
-    }
-}
-
-// Enum for Excrement Feeling
-enum PooFeeling: String, CaseIterable {
-    case happy = "happy"
-    case stern = "stern"
-    case sukkiri = "sukkiri"
-    case light = "light"
-}

@@ -12,6 +12,7 @@ struct pooApp: App {
     var body: some Scene {
         WindowGroup {
             MenuBar()
+                .environmentObject(PooViewModel())
         }
     }
 }

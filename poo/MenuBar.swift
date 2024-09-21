@@ -18,37 +18,42 @@ struct MenuBar: View {
 
         
         TabView {
-            CalendarView(friends: [])
+            CalendarView()
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Home")
                 }
+                .tag(0)
 
             AIView()
                 .tabItem {
                     Image(systemName: "brain.head.profile")
                     Text("AI")
                 }
+                .tag(1)
 
-            PooView(selectedDate: Date()){_,_ in
+            PooView(selectedDate: Date(), isSheet: false){_ in
 
             }
                 .tabItem {
                     ScaledImage(name: "poo-chan", size: CGSize(width: 24, height: 24))
 
-                    Text("Poop")
-                }           
+                    Text("Poo")
+                }
+                .tag(2)
             ChatView()
                 .tabItem {
                     Image(systemName: "message.fill")
                     Text("Chat")
                 }
+                .tag(3)
 
             UserProfileView()
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Profile")
                 }
+                .tag(4)
         }
 
     }

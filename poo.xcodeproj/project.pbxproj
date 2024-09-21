@@ -20,6 +20,8 @@
 		20627AB42C9E73A300541032 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20627AB32C9E73A300541032 /* HomeView.swift */; };
 		20627ABA2C9E8C9900541032 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20627AB92C9E8C9900541032 /* ChatViewModel.swift */; };
 		206D8E142C9EFC4E00AA6BA0 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D8E132C9EFC4E00AA6BA0 /* EditProfileView.swift */; };
+		206D8E182C9F28B900AA6BA0 /* PooViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D8E172C9F28B900AA6BA0 /* PooViewModel.swift */; };
+		206D8E1A2C9F35C300AA6BA0 /* PooModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206D8E192C9F35C300AA6BA0 /* PooModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		20627AB52C9E76CB00541032 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		20627AB92C9E8C9900541032 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		206D8E132C9EFC4E00AA6BA0 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		206D8E172C9F28B900AA6BA0 /* PooViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooViewModel.swift; sourceTree = "<group>"; };
+		206D8E192C9F35C300AA6BA0 /* PooModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,15 +74,17 @@
 		20627A982C9E614C00541032 /* poo */ = {
 			isa = PBXGroup;
 			children = (
+				20627AA72C9E6C0B00541032 /* MenuBar.swift */,
 				20627A992C9E614C00541032 /* pooApp.swift */,
+				206D8E162C9F28A200AA6BA0 /* Model */,
+				206D8E152C9F288700AA6BA0 /* ViewModel */,
+				20627AAB2C9E71EF00541032 /* PooView.swift */,
+				20627AB32C9E73A300541032 /* HomeView.swift */,
 				20627AB52C9E76CB00541032 /* EditProfileView.swift */,
 				20627AB92C9E8C9900541032 /* ChatViewModel.swift */,
 				20627A9B2C9E614C00541032 /* ContentView.swift */,
-				20627AA72C9E6C0B00541032 /* MenuBar.swift */,
 				20627AAF2C9E72C900541032 /* AIView.swift */,
 				20627AB12C9E730000541032 /* ChatView.swift */,
-				20627AB32C9E73A300541032 /* HomeView.swift */,
-				20627AAB2C9E71EF00541032 /* PooView.swift */,
 				20627AAD2C9E725A00541032 /* UserProfileView.swift */,
 				206D8E132C9EFC4E00AA6BA0 /* EditProfileView.swift */,
 				20627AA92C9E6C5A00541032 /* UserModel.swift */,
@@ -94,6 +100,22 @@
 				20627AA02C9E614E00541032 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		206D8E152C9F288700AA6BA0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				206D8E172C9F28B900AA6BA0 /* PooViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		206D8E162C9F28A200AA6BA0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				206D8E192C9F35C300AA6BA0 /* PooModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20627A9C2C9E614C00541032 /* ContentView.swift in Sources */,
+				206D8E1A2C9F35C300AA6BA0 /* PooModel.swift in Sources */,
 				20627AAE2C9E725A00541032 /* UserProfileView.swift in Sources */,
 				20627A9A2C9E614C00541032 /* pooApp.swift in Sources */,
 				206D8E142C9EFC4E00AA6BA0 /* EditProfileView.swift in Sources */,
@@ -177,6 +200,7 @@
 				20627AAC2C9E71EF00541032 /* PooView.swift in Sources */,
 				20627ABA2C9E8C9900541032 /* ChatViewModel.swift in Sources */,
 				20627AA82C9E6C0B00541032 /* MenuBar.swift in Sources */,
+				206D8E182C9F28B900AA6BA0 /* PooViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
