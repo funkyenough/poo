@@ -8,7 +8,7 @@ struct UserProfileView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                Image(systemName: "person.circle.fill")
+                Image("poo-chan")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 120, height: 120)
