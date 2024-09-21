@@ -18,7 +18,7 @@ struct MenuBar: View {
 
         
         TabView {
-            HomeView()
+            CalendarView(friends: [])
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Home")
@@ -30,7 +30,9 @@ struct MenuBar: View {
                     Text("AI")
                 }
 
-            PooView()
+            PooView(selectedDate: Date()){_,_ in
+
+            }
                 .tabItem {
                     ScaledImage(name: "poo-chan", size: CGSize(width: 24, height: 24))
 

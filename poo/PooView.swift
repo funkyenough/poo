@@ -4,16 +4,42 @@
 //
 //  Created by YaoNing on 2024/09/21.
 //
-
 import SwiftUI
 
+
+struct PooModel {
+    var selectedColor: ExcrementColor = .brown
+    var selectedFeeling: String = "happy"
+    var selectedQuantity: ExcrementQuantity = .normal
+
+
+}
+
+//@Observable
+//class PooViewModel {
+//    var selectedColor:ExcrementColor = .brown
+//    var selectedFeeling: String = "happy"
+//    var selectedQuantity: ExcrementQuantity = .normal
+//
+//}
 
 
 
 struct PooView: View {
+
+    // Data : Model
+    var selectedDate: Date
+
+
     @State private var selectedColor: ExcrementColor = .brown
     @State private var selectedFeeling: String = "happy"
     @State private var selectedQuantity: ExcrementQuantity = .normal
+
+
+    @Environment(\.dismiss) var dismiss
+//    @State private var selectedDate: Date = Date()
+
+      var onSubmit: (ExcrementColor, String) -> Void
 
     var body: some View {
         VStack(spacing: 20) {
@@ -23,50 +49,53 @@ struct PooView: View {
 
 
             Image("poo-chan-" + selectedFeeling)
-                          .resizable()
-                          .aspectRatio(contentMode: .fit)
-                          .frame(width: 120, height: 120)
-                          .foregroundColor(selectedColor.color)
-            Text(DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none))
-                .font(.subheadline)
-                .foregroundColor(.gray)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 120, height: 120)
+                .foregroundColor(selectedColor.color)
+                .background(selectedColor.color)
+
+            Text(DateFormatter.localizedString(from: selectedDate, dateStyle: .medium, timeStyle: .none))
+                     .font(.subheadline)
+                     .foregroundColor(.gray)
+            
 
             Text("Select Defecation Color")
                 .font(.headline)
 
             HStack {
-                         ForEach(ExcrementColor.allCases, id: \.self) { color in
-                             Button(action: {
-                                 selectedColor = color
-                             }) {
-                                 Circle()
-                                     .fill(color.color) // Use the color from the enum
-                                     .frame(width: 50, height: 50)
-                                     .overlay(
-                                         Circle()
-                                             .stroke(selectedColor == color ? Color.blue : Color.clear, lineWidth: 2)
-                                     )
-                             }
-                         }
-                     }
+                ForEach(ExcrementColor.allCases, id: \.self) { color in
+                    Button(action: {
+                        selectedColor = color
+                    }) {
+                        Circle()
+                            .fill(color.color) // Use the color from the enum
+                            .frame(width: 50, height: 50)
+                            .overlay(
+                                Circle()
+                                    .stroke(selectedColor == color ? Color.blue : Color.clear, lineWidth: 2)
+                            )
+                    }
+                }
+            }
 
             Text("Select Quantity")
-                         .font(.headline)
+                .font(.headline)
 
-                     // ExcrementQuantity Selector
-                     HStack {
-                         ForEach(ExcrementQuantity.allCases, id: \.self) { quantity in
-                             Button(action: {
-                                 selectedQuantity = quantity
-                             }) {
-                                 Text(quantity.rawValue)
-                                     .padding()
-                                     .background(selectedQuantity == quantity ? Color.blue : Color.gray.opacity(0.2))
-                                     .foregroundColor(.white)
-                                     .cornerRadius(8)
-                             }
-                         }
-                     }
+            // ExcrementQuantity Selector
+            HStack {
+                ForEach(ExcrementQuantity.allCases, id: \.self) { quantity in
+                    Button(action: {
+                        selectedQuantity = quantity
+                    }) {
+                        Text(quantity.rawValue)
+                            .padding()
+                            .background(selectedQuantity == quantity ? Color.blue : Color.gray.opacity(0.2))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                }
+            }
 
             Text("Select Feeling")
                 .font(.headline)
@@ -87,7 +116,9 @@ struct PooView: View {
             }
 
             Button(action: {
-                submitRecord()
+//                submitRecord()
+                onSubmit(selectedColor, selectedFeeling)
+                dismiss()
             }) {
                 Text("Submit")
                     .fontWeight(.bold)
@@ -108,7 +139,7 @@ struct PooView: View {
 
 
 #Preview {
-    PooView()
+    PooView(selectedDate: Date()){_,_ in }
 }
 
 
