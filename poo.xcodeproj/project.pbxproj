@@ -140,6 +140,8 @@
 		206D8E162C9F28A200AA6BA0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2E523A2C2C9F8FF8000375CE /* PublicToiletModel.swift */,
+				2E523A2E2C9F94DA000375CE /* ReviewModel.swift */,
 				206D8E192C9F35C300AA6BA0 /* PooModel.swift */,
 			);
 			path = Model;
