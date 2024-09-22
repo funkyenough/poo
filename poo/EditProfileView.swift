@@ -33,15 +33,19 @@ struct EditProfileView: View {
                 VStack {
                     Text("ユーザー名")
                     TextField("ユーザー名", text: $viewModel.userName)
-                }.padding()
+                }
                 VStack{
                         Text("住んでいる地域")
                         TextField("住んでいる地域", text:$viewModel.userLocation.toUnwrapped(defaultValue: ""))
-                }.padding()
+                }
                 VStack{
                     Text("好きな腸活アイテム")
                     TextField("好きな腸活アイテム", text: $viewModel.favoriteItem.toUnwrapped(defaultValue: ""))
-                }.padding()
+                }
+                VStack{
+                    Text("おすすめの公衆トイレ")
+                    TextField("おすすめの公衆トイレ", text: $viewModel.favoritePlace.toUnwrapped(defaultValue: ""))
+                }
             }
         }
             // 編集ボタン

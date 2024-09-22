@@ -28,7 +28,7 @@ struct PooView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Defecation Record")
+            Text("排便の記録")
                 .font(.largeTitle)
                 .fontWeight(.bold)
 
@@ -45,7 +45,7 @@ struct PooView: View {
                      .foregroundColor(.gray)
             
 
-            Text("Select Defecation Color")
+            Text("便の色を選択")
                 .font(.headline)
 
             HStack {
@@ -64,7 +64,7 @@ struct PooView: View {
                 }
             }
 
-            Text("Select Quantity")
+            Text("便の質を選択")
                 .font(.headline)
 
             // ExcrementQuantity Selector
@@ -75,14 +75,14 @@ struct PooView: View {
                     }) {
                         Text(size.rawValue)
                             .padding()
-                            .background(selectedSize == size ? Color.blue : Color.gray.opacity(0.2))
+                            .background(selectedSize == size ? Color.cyan : Color.gray.opacity(0.2))
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
                 }
             }
 
-            Text("Select Feeling")
+            Text("便の気持ちを選択")
                 .font(.headline)
 
             HStack {
@@ -136,12 +136,13 @@ struct PooView: View {
                             .progressViewStyle(CircularProgressViewStyle())
                             .scaleEffect(1.5, anchor: .center)
                     } else {
-                        Text(isSheet ? "Submit" : "Update Today")
+                        Text(isSheet ? "Submit" : "記録する")
                             .fontWeight(.bold)
-                            .padding()
+                            .padding(15)
                             .background(Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(10)
+                            .font(.system(size:20))
                     }
                 }
                 .frame(height: 50) // Fixed height to prevent layout shifts

@@ -11,14 +11,16 @@ class UserProfileViewModel {
     var favoriteItem :String?
     var bowelStreak :Int?
     var bowelLevel :String?
+    var favoritePlace :String?
     var showEdit :Bool
-    init(userName: String, userBirthday: String? = nil, userLocation: String? = nil, favoriteItem: String? = nil, bowelStreak: Int? = nil, bowelLevel: String? = nil, showEdit: Bool = false) {
+    init(userName: String, userBirthday: String? = nil, userLocation: String? = nil, favoriteItem: String? = nil, bowelStreak: Int? = nil, bowelLevel: String? = nil,favoritePlace: String? = nil, showEdit: Bool = false) {
         self.userName = userName
         self.userBirthday = userBirthday
         self.userLocation = userLocation
         self.favoriteItem = favoriteItem
         self.bowelStreak = bowelStreak
         self.bowelLevel = bowelLevel
+        self.favoritePlace = favoritePlace
         self.showEdit = showEdit
     }
 
@@ -28,7 +30,7 @@ class UserProfileViewModel {
 
 struct UserProfileView: View {
     
-    @State var viewModel: UserProfileViewModel = UserProfileViewModel(userName: "unchi", userLocation:"東京",favoriteItem:"きのこ",bowelStreak: 2, bowelLevel: "normal")
+    @State var viewModel: UserProfileViewModel = UserProfileViewModel(userName: "unchi", userLocation:"東京",favoriteItem:"ヨーグルト、きのこ",bowelStreak: 2, bowelLevel: "5級",favoritePlace:"もみじ谷 公衆トイレ")
 //    @State private var userName = "John Doe"
 //    //@State private var userEmail = "john.doe@example.com"
 //    //@State private var userBio = "iOS Developer & SwiftUI Enthusiast"
@@ -65,6 +67,7 @@ struct UserProfileView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         InfoRow(title: "住んでいる地域", value: viewModel.userLocation ?? "")
                         InfoRow(title: "好きな腸活アイテム", value: viewModel.favoriteItem ?? "")
+                        InfoRow(title: "おすすめのトイレ", value: viewModel.favoritePlace ?? "")
                     }
                     .padding()
 
