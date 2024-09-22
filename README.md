@@ -10,6 +10,8 @@ Welcome to the **Poo App** – the ultimate tool for anyone who wants to keep tr
 - **Poo Community**: Join a supportive community of like-minded individuals who share tips, stories, and more.
 - **And More**: Discover additional features designed to make tracking your bowel movements simple and fun!
 
+[Canva Presentation Link](https://www.canva.com/design/DAGRZoA72iI/nZvOW6AmpR4DsB5-AsUEeA/edit)
+
 Join the Poo Tracker App today and take control of your digestive health while connecting with a community that understands you!
 
 ### About
