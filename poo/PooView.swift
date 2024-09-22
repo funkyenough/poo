@@ -75,7 +75,7 @@ struct PooView: View {
                     }) {
                         Text(size.rawValue)
                             .padding()
-                            .background(selectedSize == size ? Color.cyan : Color.gray.opacity(0.2))
+                            .background(selectedSize == size ? Color.mainColor : Color.gray.opacity(0.2))
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
@@ -137,12 +137,12 @@ struct PooView: View {
                             .scaleEffect(1.5, anchor: .center)
                     } else {
                         Text(isSheet ? "Submit" : "記録する")
-                            .fontWeight(.bold)
-                            .padding(15)
-                            .background(Color.blue)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.secondaryColor)
                             .foregroundColor(.white)
                             .cornerRadius(10)
-                            .font(.system(size:20))
                     }
                 }
                 .frame(height: 50) // Fixed height to prevent layout shifts

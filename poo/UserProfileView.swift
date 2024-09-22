@@ -89,7 +89,7 @@ struct UserProfileView: View {
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.secondaryColor)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }

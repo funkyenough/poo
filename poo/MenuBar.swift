@@ -63,6 +63,7 @@ struct MenuBar: View {
 
 #Preview {
     MenuBar()
+        .environmentObject(PooViewModel())
 }
 
 

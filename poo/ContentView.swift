@@ -23,74 +23,106 @@ struct ContentView: View {
     LoginView()
 }
 
-
-
 struct LoginView: View {
-    @State private var username = ""
+    @State private var email = ""
     @State private var password = ""
-    @State private var showPopup = false
+    @State private var showingRegistration = false
 
     var body: some View {
-        ZStack {
-            VStack {
-                Text("Login")
-                    .font(.largeTitle)
-                    .padding()
+        NavigationView {
+            VStack(spacing: 20) {
+                Image(systemName: "seal.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.secondaryColor)
 
-                TextField("Username", text: $username)
+                Text("PooTracker")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+
+                TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .autocapitalization(.none)
 
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
 
                 Button(action: {
-                    // Perform login action here
+                    // Perform login action
                     print("Login tapped")
-                    showPopup = true
                 }) {
                     Text("Log In")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.secondaryColor)
                         .foregroundColor(.white)
-                        .frame(width: 200, height: 50)
-                        .background(Color.blue)
                         .cornerRadius(10)
                 }
+
+                Button("Don't have an account? Sign Up") {
+                    showingRegistration = true
+                }
+                .foregroundColor(.secondaryColor)
             }
             .padding()
-
-            if showPopup {
-                Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        showPopup = false
-                    }
-
-                VStack {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.blue)
-
-                    Text("Welcome, \(username)!")
-                        .font(.title)
-                        .padding()
-
-                    Button("Close") {
-                        showPopup = false
-                    }
-                    .padding()
-                }
-                .frame(width: 300, height: 300)
-                .background(Color.white)
-                .cornerRadius(20)
-                .shadow(radius: 20)
-                .transition(.scale)
-                .animation(.spring())
-            }
+            .navigationBarHidden(true)
+        }
+        .sheet(isPresented: $showingRegistration) {
+            RegisterView()
         }
     }
 }
 
- 
+struct RegisterView: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var confirmPassword = ""
+    @Environment(\.presentationMode) var presentationMode
+
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 20) {
+                Image(systemName: "seal.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.secondaryColor)
+
+                Text("Create Account")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+
+                TextField("Email", text: $email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+
+                SecureField("Password", text: $password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                SecureField("Confirm Password", text: $confirmPassword)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                Button(action: {
+                    // Perform registration action
+                    print("Register tapped")
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Register")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.secondaryColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+
+                Button("Already have an account? Log In") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .foregroundColor(.secondaryColor)
+            }
+            .padding()
+            .navigationBarHidden(true)
+        }
+    }
+}

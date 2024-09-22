@@ -207,10 +207,12 @@ struct CalendarView: View {
                     showAIView.toggle()
                 }) {
                     Text("相談")
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
                         .padding()
-                        .background( Color.blue )
+                        .background(Color.secondaryColor)
                         .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .cornerRadius(10)
                 }
             }
             .padding()
