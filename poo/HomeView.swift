@@ -154,9 +154,13 @@ struct CalendarView: View {
 
         GeometryReader { geometry in
             VStack {
-                Text("Calendar")
-                    .font(.largeTitle)
-                    .padding()
+                Text("カレンダー")
+                    .font(.title)
+                    .padding(5)
+
+                Text("2024年9月")
+                    .font(.title2)
+                    .padding(8)
 
                 HStack {
                     ForEach(daysOfWeek, id: \.self) { day in
@@ -206,9 +210,9 @@ struct CalendarView: View {
                 Button(action: {
                     showAIView.toggle()
                 }) {
-                    Text("相談")
+                    Text(" 相談する ")
                         .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
+//                      .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.secondaryColor)
                         .foregroundColor(.white)
@@ -235,8 +239,10 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView()
+    MenuBar()
+        .environmentObject(PooViewModel())
 }
+
 //struct Date: Identifiable {
 ////    let id = UUID()  // Unique identifier
 ////    let date: Date
