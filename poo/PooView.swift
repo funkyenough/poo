@@ -105,7 +105,7 @@ struct PooView: View {
 //                pooDataDict[date] = poo
 //                submitRecord()
                 onSubmit(PooDataModel(pooColor: selectedColor, pooFeeling: selectedFeeling, pooSize: selectedSize))
-                dismiss()
+                
 
                 isLoading = true
                           // Simulate a network request or processing delay
