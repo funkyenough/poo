@@ -147,13 +147,14 @@ struct MapView: View {
 
                 let mapItems = response.mapItems
                 let toiletsFromQuery = mapItems.map { item -> PublicToilet in
+                    let id = UUID()
                     let name = item.name ?? "トイレ"
                     let coordinate = item.placemark.coordinate
                     let address = parseAddress(from: item.placemark)
                     let facilities = ["Accessible"] // Placeholder
                     let rating = 4.0 // Placeholder
                     
-                    return PublicToilet(name: name, coordinate: coordinate, address: address, facilities: facilities, rating: rating)
+                    return PublicToilet(id: id, name: name, coordinate: coordinate, address: address, facilities: facilities, rating: rating)
                 }
                 
                 foundToilets.append(contentsOf: toiletsFromQuery)
@@ -218,34 +219,309 @@ struct MapView: View {
     }
 }
 
+// MARK: - FacilityStatusView
+struct FacilityStatusView: View {
+    var iconName: String
+    var status: Bool
+    var label: String
+    
+    var body: some View {
+        VStack {
+            Image(systemName: iconName)
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundColor(status ? .green : .red)
+            Text(label)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+// MARK: - AvailabilityIconView
+struct AvailabilityIconView: View {
+    var iconName: String
+    var label: String
+    var available: Bool?
+    
+    var body: some View {
+        VStack {
+            Image(systemName: iconName)
+                .resizable()
+                .frame(width: 20, height: 20)
+                .foregroundColor(available == true ? .green : .red)
+            Text(label)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+// MARK: - ReviewView
+struct ReviewView: View {
+    var review: Review
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                // User Identifier Placeholder
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(.blue)
+                
+                VStack(alignment: .leading) {
+                    Text("User \(review.user_id.uuidString.prefix(5))") // Placeholder for user name
+                        .font(.headline)
+                    Text(review.timestamp, style: .date)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
+                Spacer()
+            }
+            
+            // Ratings
+            HStack(spacing: 20) {
+                VStack(alignment: .leading) {
+                    Text("Cleanliness")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    HStack(spacing: 2) {
+                        ForEach(0..<5) { index in
+                            Image(systemName: index < Int(review.cleanliness.rounded()) ? "star.fill" : "star")
+                                .foregroundColor(.yellow)
+                        }
+                        Text(String(format: "%.1f", review.cleanliness))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("Crowdedness")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    HStack(spacing: 2) {
+                        ForEach(0..<5) { index in
+                            Image(systemName: index < Int(review.crowdedness.rounded()) ? "star.fill" : "star")
+                                .foregroundColor(.yellow)
+                        }
+                        Text(String(format: "%.1f", review.crowdedness))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            
+            // Facilities Availability
+            HStack(spacing: 15) {
+                AvailabilityIconView(iconName: "paperclip", label: "Toilet Paper", available: review.toilet_paper_available)
+                AvailabilityIconView(iconName: "soap", label: "Soap", available: review.soap_available)
+                AvailabilityIconView(iconName: "hand.dryer", label: "Hand Dryer", available: review.hand_dryer_functional)
+                AvailabilityIconView(iconName: "drop.fill", label: "Sanitizer", available: review.sanitizer_available)
+            }
+            
+            // Comments
+            if let comments = review.comments, !comments.isEmpty {
+                Text(comments)
+                    .font(.body)
+                    .foregroundColor(.primary)
+                    .padding(.top, 5)
+            }
+            
+            Divider()
+        }
+        .padding(.vertical, 5)
+    }
+}
+
 // MARK: - ToiletDetailView
 struct ToiletDetailView: View {
     var toilet: PublicToilet
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text(toilet.name)
-                .font(.largeTitle)
-                .padding(.top)
-            
-            Text("Address: \(toilet.address)")
-                .font(.subheadline)
-            
-            Text("Facilities: \(toilet.facilities.joined(separator: ", "))")
-                .font(.subheadline)
-            
-            Text(String(format: "Rating: %.1f ⭐️", toilet.rating))
-                .font(.subheadline)
-            
-            Spacer()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                // Header with Toilet Name
+                Text(toilet.name)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .padding(.top)
+                
+                // Address Section
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "location.fill")
+                        .foregroundColor(.blue)
+                        .frame(width: 24, height: 24)
+                    Text(toilet.address)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                // Facilities Section
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Facilities")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    HStack {
+                        ForEach(toilet.facilities, id: \.self) { facility in
+                            HStack(spacing: 5) {
+                                Image("poo-chan")
+                                    .foregroundColor(.green)
+                                    .frame(width: 250, height: 250)
+                                Text(facility)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(8)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(8)
+                        }
+                    }
+                }
+                
+                // Average Ratings Section
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Ratings")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    HStack(spacing: 20) {
+                        VStack(alignment: .leading) {
+                            Text("Cleanliness")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            HStack(spacing: 2) {
+                                ForEach(0..<5) { index in
+                                    Image(systemName: index < Int(toilet.averageCleanliness.rounded()) ? "star.fill" : "star")
+                                        .foregroundColor(.yellow)
+                                }
+                                Text(String(format: "%.1f", toilet.averageCleanliness))
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("Crowdedness")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            HStack(spacing: 2) {
+                                ForEach(0..<5) { index in
+                                    Image(systemName: index < Int(toilet.averageCrowdedness.rounded()) ? "star.fill" : "star")
+                                        .foregroundColor(.yellow)
+                                }
+                                Text(String(format: "%.1f", toilet.averageCrowdedness))
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+                
+                // Facilities Availability Based on Reviews
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Facilities Availability")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    HStack {
+                        FacilityStatusView(
+                            iconName: "toilet.paper",
+                            status: toilet.reviews.contains { $0.toilet_paper_available == true },
+                            label: "Toilet Paper"
+                        )
+                        
+                        FacilityStatusView(
+                            iconName: "soap",
+                            status: toilet.reviews.contains { $0.soap_available == true },
+                            label: "Soap"
+                        )
+                        
+                        FacilityStatusView(
+                            iconName: "hand.dryer",
+                            status: toilet.reviews.contains { $0.hand_dryer_functional == true },
+                            label: "Hand Dryer"
+                        )
+                        
+                        FacilityStatusView(
+                            iconName: "drop.fill",
+                            status: toilet.reviews.contains { $0.sanitizer_available == true },
+                            label: "Sanitizer"
+                        )
+                    }
+                }
+                
+//                // Open in Maps Button
+//                Button(action: openInMaps) {
+//                    HStack {
+//                        Image(systemName: "map")
+//                        Text("Open in Maps")
+//                            .fontWeight(.semibold)
+//                    }
+//                    .foregroundColor(.white)
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .background(Color.blue)
+//                    .cornerRadius(10)
+//                }
+//                .padding(.top)
+//                
+                // Reviews Section
+                VStack(alignment: .leading, spacing: 15) {
+                    Text("Reviews")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    if toilet.reviews.isEmpty {
+                        Text("No reviews yet.")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(toilet.reviews.sorted(by: { $0.timestamp > $1.timestamp })) { review in
+                            ReviewView(review: review)
+                        }
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
         }
-        .padding()
+    }
+    
+    // MARK: - Preview
+    struct ToiletDetailView_Previews: PreviewProvider {
+        static var previews: some View {
+            let sampleReview = Review(
+                id: UUID(),
+                toilet_id: UUID(),
+                user_id: UUID(),
+                cleanliness: 4.5,
+                crowdedness: 2.0,
+                toilet_paper_available: true,
+                soap_available: true,
+                hand_dryer_functional: false,
+                sanitizer_available: true,
+                comments: "Clean and well-maintained. The soap dispenser works fine.",
+                timestamp: Date()
+            )
+            
+            let sampleToilet = PublicToilet(
+                id: UUID(),
+                name: "Central Park Public Toilet",
+                coordinate: CLLocationCoordinate2D(latitude: 35.6895, longitude: 139.6917),
+                address: "1 Central Park, Tokyo, Japan",
+                facilities: ["Accessible", "Baby Changing", "Unisex"],
+                rating: 4.5,
+                distance: 250.0,
+                reviews: [sampleReview]
+            )
+            
+            ToiletDetailView(toilet: sampleToilet)
+        }
     }
 }
 
-// MARK: - Preview
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView()
-    }
-}

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Review Struct
 struct Review: Identifiable, Codable, Hashable {
     let id: UUID
     let toilet_id: UUID
