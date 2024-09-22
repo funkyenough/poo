@@ -40,7 +40,8 @@ struct UserProfileView: View {
 //    @State private var bowelStreak = 7                // うんち状況
 //    @State private var bowelLevel = "Normal"          // 排便レベル
 //    @State private var showEdit = false
-//    
+//
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
 //        NavigationView {
         ScrollView {
@@ -94,8 +95,27 @@ struct UserProfileView: View {
                             .cornerRadius(10)
                     }
                     .padding(.horizontal)
+
+
+
+                    Button(action: {
+
+                        presentationMode.wrappedValue.dismiss()
+
+
+                    }) {
+                        HStack {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                            Text("Logout")
+                        }
+                        .foregroundColor(.red)
+
+                    }
+
+                    
                 }
                 .padding(20)
+
             }
             // ナビゲーションバーのカスタマイズ
 //            .toolbar {

@@ -62,47 +62,47 @@ import SwiftUI
 //    }
 //}
 //
-//struct Recipe: Identifiable {
-//    let id = UUID()
-//    let name: String
-//    let description: String
-//    let ingredients: [String]
-//    let preparationTime: Int
-//    let cookingTime: Int
-//}
-//
-//struct RecipeCard: View {
-//    let recipe: Recipe
-//
-//    var body: some View {
-//        VStack(alignment: .leading, spacing: 10) {
-//            Text(recipe.name)
-//                .font(.title2)
-//                .fontWeight(.bold)
-//
-//            Text(recipe.description)
-//                .font(.subheadline)
-//                .foregroundColor(.secondary)
-//
-//            HStack {
-//                Label("\(recipe.preparationTime) min", systemImage: "clock")
-//                Label("\(recipe.cookingTime) min", systemImage: "flame")
-//            }
-//            .font(.caption)
-//
-//            Text("Ingredients:")
-//                .font(.headline)
-//
-//            ForEach(recipe.ingredients, id: \.self) { ingredient in
-//                Text("• \(ingredient)")
-//                    .font(.caption)
-//            }
-//        }
-//        .padding()
-//        //        .background(Color.gray.opacity(0.1))
-//        .cornerRadius(10)
-//    }
-//}
+struct Recipe: Identifiable {
+    let id = UUID()
+    let name: String
+    let description: String
+    let ingredients: [String]
+    let preparationTime: Int
+    let cookingTime: Int
+}
+
+struct RecipeCard: View {
+    let recipe: Recipe
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(recipe.name)
+                .font(.title2)
+                .fontWeight(.bold)
+
+            Text(recipe.description)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            HStack {
+                Label("\(recipe.preparationTime) min", systemImage: "clock")
+                Label("\(recipe.cookingTime) min", systemImage: "flame")
+            }
+            .font(.caption)
+
+            Text("Ingredients:")
+                .font(.headline)
+
+            ForEach(recipe.ingredients, id: \.self) { ingredient in
+                Text("• \(ingredient)")
+                    .font(.caption)
+            }
+        }
+        .padding()
+        //        .background(Color.gray.opacity(0.1))
+        .cornerRadius(10)
+    }
+}
 //
 //#Preview {
 //    CalendarView()
@@ -117,6 +117,7 @@ struct CalendarView: View {
     //    @State private var pooDataDict: [Date: PooDataModel] = [:]
     @State private var showAIView = false
     @EnvironmentObject private var popManager: PooViewModel
+    @State private var recommendedRecipe: Recipe?
     private var daysOfWeek: [String] {
         return Calendar.current.weekdaySymbols
     }
@@ -149,74 +150,113 @@ struct CalendarView: View {
         }
         return summary
     }
+
+    func loadRecommendedRecipe() {
+        // Simulating an API call to get a recommended recipe
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.recommendedRecipe = Recipe(
+                name: "Grilled Chicken Salad",
+                description: "A healthy and delicious salad with grilled chicken, mixed greens, and a light vinaigrette.",
+                ingredients: [
+                    "2 chicken breasts",
+                    "4 cups mixed greens",
+                    "1 cucumber, sliced",
+                    "1 tomato, diced",
+                    "1/4 cup olive oil",
+                    "2 tbsp balsamic vinegar",
+                    "Salt and pepper to taste"
+                ],
+                preparationTime: 20,
+                cookingTime: 15
+            )
+        }
+    }
+
+
     var body: some View {
 
 
         GeometryReader { geometry in
-            VStack {
-                Text("Calendar")
-                    .font(.largeTitle)
-                    .padding()
 
-                HStack {
-                    ForEach(daysOfWeek, id: \.self) { day in
-                        Text(day.prefix(2))
-                            .frame(maxWidth: .infinity)
-                    }
-                }
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    Text("排便カレンダー")
+                        .font(.largeTitle)
+                        .padding()
 
-                let days = daysInMonth
-                let isLandscape = geometry.size.width > geometry.size.height
-                let columns = Array(repeating: GridItem(.flexible()), count: isLandscape ? 10 : 7)
-                LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(days, id: \.self) { day in
-                        VStack {
-                            Text("\(day)")
-                                .font(.headline)
+                    HStack {
+                        ForEach(daysOfWeek, id: \.self) { day in
+                            Text(day.prefix(2))
                                 .frame(maxWidth: .infinity)
+                        }
+                    }
 
-                            // display poo data in here
-                            if let date = formattedDate(for: day), let pooData = popManager.pooDataDict[date] {
-                                Image(pooData.pooFeeling.rawValue)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor(pooData.pooColor.color)
+                    let days = daysInMonth
+                    let isLandscape = geometry.size.width > geometry.size.height
+                    let columns = Array(repeating: GridItem(.flexible()), count: isLandscape ? 10 : 7)
+                    LazyVGrid(columns: columns, spacing: 10) {
+                        ForEach(days, id: \.self) { day in
+                            VStack {
+                                Text("\(day)")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+
+                                // display poo data in here
+                                if let date = formattedDate(for: day), let pooData = popManager.pooDataDict[date] {
+                                    Image(pooData.pooFeeling.rawValue)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(pooData.pooColor.color)
+                                }
+                            }
+
+                            .frame(height: 65)
+                            .background(isToday(day: day) ? Color.blue.opacity(0.3) : Color.white) // Highlight today
+                            .cornerRadius(8)
+                            .shadow(radius: 2)
+                            .onTapGesture {
+                                // Set selected date and show PooView
+                                let calendar = Calendar.current
+                                var dateComponents = calendar.dateComponents([.year, .month], from: Date())
+                                dateComponents.day = day
+                                selectedDate = calendar.date(from: dateComponents)
                             }
                         }
+                    }
+                    .padding()
+                    // Summary View
+                    //                let summary = summarizePooData()
+                    //                PooSummaryView(summary: summary)
 
-                        .frame(height: 65)
-                        .background(isToday(day: day) ? Color.blue.opacity(0.3) : Color.white) // Highlight today
-                        .cornerRadius(8)
-                        .shadow(radius: 2)
-                        .onTapGesture {
-                            // Set selected date and show PooView
-                            let calendar = Calendar.current
-                            var dateComponents = calendar.dateComponents([.year, .month], from: Date())
-                            dateComponents.day = day
-                            selectedDate = calendar.date(from: dateComponents)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Today's Recommended Recipe")
+                            .font(.headline)
+
+                        if let recipe = recommendedRecipe {
+                            RecipeCard(recipe: recipe)
+                        } else {
+                            Text("Loading recipe...")
+                                .italic()
                         }
                     }
-                }
-                .padding()
-                // Summary View
-                let summary = summarizePooData()
-                PooSummaryView(summary: summary)
-
-                Button(action: {
-                    showAIView.toggle()
-                }) {
-                    Text("相談")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.secondaryColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    .padding()
+                    Button(action: {
+                        showAIView.toggle()
+                    }) {
+                        Text("相談")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.secondaryColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
                 }
             }
             .padding()
         }
+        .onAppear(perform: loadRecommendedRecipe)
         .sheet(item: $selectedDate){ date in
             //            if let selectedDate = selectedDate {
             PooView(selectedDate: date, isSheet: true) { poo in

@@ -101,7 +101,7 @@ struct AIView: View {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
                         .padding(10)
-                        .background(Color.blue)
+                        .background(Color.secondaryColor)
                         .clipShape(Circle())
                 }
                 .disabled(userInput.isEmpty || isThinking)

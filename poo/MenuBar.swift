@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct MenuBar: View {
+    @Environment(\.presentationMode) var presentationMode
     init(){
 
            UITabBar.appearance().backgroundColor = UIColor.white
@@ -55,6 +56,16 @@ struct MenuBar: View {
                 }
                 .tag(4)
         }
+//        .overlay(
+//            VStack {
+//                Spacer()
+//                LogoutButton(action: {
+//                    // Perform logout action
+//                    presentationMode.wrappedValue.dismiss()
+//                })
+//                .padding()
+//            }
+//        )
 
     }
 }
