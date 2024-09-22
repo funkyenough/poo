@@ -1,29 +1,13 @@
+//
+//  MapView.swift
+//  poo
+//
+//  Created by Ying Hong on 2024/09/22.
+//
+
 import SwiftUI
 import MapKit
 import CoreLocation
-
-extension CLLocationCoordinate2D: Equatable {
-    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
-        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
-    }
-}
-
-extension CLLocationCoordinate2D: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(latitude)
-        hasher.combine(longitude)
-    }
-}
-
-// MARK: - PublicToilet Model
-struct PublicToilet: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-    let address: String
-    let facilities: [String]
-    let rating: Double
-}
 
 // MARK: - LocationManager
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
@@ -94,7 +78,7 @@ struct MapView: View {
             Map(coordinateRegion: $locationManager.region, annotationItems: toilets) { toilet in
                 MapAnnotation(coordinate: toilet.coordinate) {
                     VStack {
-                        Image(systemName: "toilet")
+                        Image("poo-chan")
                             .resizable()
                             .frame(width: 30, height: 30)
                             .foregroundColor(.blue)
@@ -102,9 +86,6 @@ struct MapView: View {
                                 selectedToilet = toilet
                                 showingDetail = true
                             }
-                        Text(toilet.name)
-                            .font(.caption)
-                            .fixedSize()
                     }
                 }
             }
