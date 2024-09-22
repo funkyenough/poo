@@ -177,6 +177,14 @@ struct CalendarView: View {
 
 
         GeometryReader { geometry in
+            VStack {
+                Text("カレンダー")
+                    .font(.title)
+                    .padding(5)
+
+                Text("2024年9月")
+                    .font(.title2)
+                    .padding(8)
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
@@ -229,6 +237,16 @@ struct CalendarView: View {
                     //                let summary = summarizePooData()
                     //                PooSummaryView(summary: summary)
 
+                Button(action: {
+                    showAIView.toggle()
+                }) {
+                    Text(" 相談する ")
+                        .fontWeight(.semibold)
+//                      .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.secondaryColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Today's Recommended Recipe")
                             .font(.headline)
@@ -275,8 +293,10 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView()
+    MenuBar()
+        .environmentObject(PooViewModel())
 }
+
 //struct Date: Identifiable {
 ////    let id = UUID()  // Unique identifier
 ////    let date: Date

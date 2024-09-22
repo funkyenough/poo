@@ -44,8 +44,8 @@ struct MenuBar: View {
 
             MapView()
                 .tabItem {
-                    Image(systemName: "message.fill")
-                    Text("Chat")
+                    Image(systemName: "map.fill")
+                    Text("Map")
                 }
                 .tag(3)
 
