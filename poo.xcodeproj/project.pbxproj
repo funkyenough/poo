@@ -94,8 +94,8 @@
 		20627A982C9E614C00541032 /* poo */ = {
 			isa = PBXGroup;
 			children = (
-				20627AA72C9E6C0B00541032 /* MenuBar.swift */,
 				20627A992C9E614C00541032 /* pooApp.swift */,
+				20627AA72C9E6C0B00541032 /* MenuBar.swift */,
 				206D8E162C9F28A200AA6BA0 /* Model */,
 				206D8E152C9F288700AA6BA0 /* ViewModel */,
 				20627AAB2C9E71EF00541032 /* PooView.swift */,

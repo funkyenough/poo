@@ -24,20 +24,21 @@ struct ContentView: View {
 }
 
 struct LoginView: View {
-    @State private var email = ""
-    @State private var password = ""
+    @State private var email = "poo@poo.com"
+    @State private var password = "123456"
     @State private var showingRegistration = false
+    @State private var isLoggedIn = false
 
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Image(systemName: "seal.fill")
+                Image("poo-chan")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
                     .foregroundColor(.secondaryColor)
 
-                Text("PooTracker")
+                Text("My Poo!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
@@ -51,6 +52,7 @@ struct LoginView: View {
                 Button(action: {
                     // Perform login action
                     print("Login tapped")
+                    isLoggedIn = true // Set this to true when login is successful
                 }) {
                     Text("Log In")
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -69,7 +71,10 @@ struct LoginView: View {
             .navigationBarHidden(true)
         }
         .sheet(isPresented: $showingRegistration) {
-            RegisterView()
+            RegisterView(isLoggedIn: $isLoggedIn)
+        }
+        .fullScreenCover(isPresented: $isLoggedIn) {
+            MenuBar()
         }
     }
 }
@@ -79,6 +84,7 @@ struct RegisterView: View {
     @State private var password = ""
     @State private var confirmPassword = ""
     @Environment(\.presentationMode) var presentationMode
+    @Binding var isLoggedIn: Bool
 
     var body: some View {
         NavigationView {
@@ -106,6 +112,7 @@ struct RegisterView: View {
                 Button(action: {
                     // Perform registration action
                     print("Register tapped")
+                    isLoggedIn = true // Set this to true when registration is successful
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Register")
